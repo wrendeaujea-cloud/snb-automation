@@ -10,12 +10,33 @@ from openpyxl import load_workbook
 from openpyxl.styles import Font, Border, Side
 
 # ==========CONFIG===========
-SOURCE_FOLDER = Path(r"C:\Users\wberame\OneDrive - Lexmark International Inc\Desktop\SNB")
-DEST_FOLDER = Path(r"C:\Users\wberame\OneDrive - Lexmark International Inc\Desktop\SNB\Clint and Eric")
+# destination folder inside workflow
+DEST_FOLDER = Path("output")
+DEST_FOLDER.mkdir(exist_ok=True)
 
-ContactReport = "AM0165SX_New - Contacts For Account with Row Id.xlsx"
-MP8032Report = "MP8032SP - Asset Detail Report - Extended.xlsx"
+# OneDrive direct links
+ContactReport_URL = "https://lexmarkad-my.sharepoint.com/:x:/r/personal/wrendeaujea_berame_lexmark_com/Documents/Desktop/SNB/AM0165SX_New%20-%20Contacts%20For%20Account%20with%20Row%20Id.xlsx?d=wa725262370634c2784fbd96941597db0&csf=1&web=1&e=fzNcA8"
+MP8032Report_URL = "https://lexmarkad-my.sharepoint.com/:x:/r/personal/wrendeaujea_berame_lexmark_com/Documents/Desktop/SNB/MP8032SP%20-%20Asset%20Detail%20Report%20-%20Extended.xlsx?d=w246fc6a813a64d47bc04c2316988a550&csf=1&web=1&e=0jWKiX"
+
+# local filenames in workflow
+ContactReport_FILE = DEST_FOLDER / "AM0165SX_New - Contacts For Account with Row Id.xlsx"
+MP8032Report_FILE = DEST_FOLDER / "MP8032SP - Asset Detail Report - Extended.xlsx"
+
 #==================
+
+# download Contact report
+r = requests.get(ContactReport_URL)
+r.raise_for_status()
+with open(ContactReport_FILE, "wb") as f:
+    f.write(r.content)
+
+# download Asset report
+r = requests.get(MP8032Report_URL)
+r.raise_for_status()
+with open(MP8032Report_FILE, "wb") as f:
+    f.write(r.content)
+
+print("Files downloaded successfully")
 
 def main():
     #create destination folder if it doesn't exist
@@ -99,4 +120,5 @@ for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=ws.max
 
 #save again
 wb.save(output_file)
+
 print("Fonts and border applied successfully")
