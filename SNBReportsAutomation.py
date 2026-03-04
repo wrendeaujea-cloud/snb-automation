@@ -38,29 +38,12 @@ with open(MP8032Report_FILE, "wb") as f:
 
 print("Files downloaded successfully")
 
-def main():
-    #create destination folder if it doesn't exist
-    DEST_FOLDER.mkdir(parents=True, exist_ok=True)
-
-    #define full file path
-    src_1 = SOURCE_FOLDER / ContactReport
-    src_2 = SOURCE_FOLDER / MP8032Report
-
-    dest_1 = DEST_FOLDER / ContactReport
-    dest_2 = DEST_FOLDER / MP8032Report
-
-    #copy files
-    shutil.copy(src_1, dest_1)
-    shutil.copy(src_2, dest_2)
-
-    print("Files copied successfully")
-
-if __name__ == "__main__":
-    main()
+CONTACT_FILE = DEST_FOLDER / "AM0165SX_New - Contacts For Account with Row Id.xlsx"
+ASSET_FILE   = DEST_FOLDER / "MP8032SP - Asset Detail Report - Extended.xlsx"
 
 #load excel files
-contact_df = pd.read_excel(DEST_FOLDER / ContactReport, header = 1)
-asset_df = pd.read_excel(DEST_FOLDER / MP8032Report, header = 1)
+contact_df = pd.read_excel(DEST_FOLDER / CONTACT_FILE, header = 1)
+asset_df = pd.read_excel(DEST_FOLDER / ASSET_FILE, header = 1)
 
 #merge (left join)
 merge_df = asset_df.merge(
@@ -122,3 +105,4 @@ for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=ws.max
 wb.save(output_file)
 
 print("Fonts and border applied successfully")
+
