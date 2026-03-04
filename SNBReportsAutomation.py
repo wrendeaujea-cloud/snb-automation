@@ -42,8 +42,8 @@ CONTACT_FILE = DEST_FOLDER / "AM0165SX_New - Contacts For Account with Row Id.xl
 ASSET_FILE   = DEST_FOLDER / "MP8032SP - Asset Detail Report - Extended.xlsx"
 
 #load excel files
-contact_df = pd.read_excel(DEST_FOLDER / CONTACT_FILE, header = 1)
-asset_df = pd.read_excel(DEST_FOLDER / ASSET_FILE, header = 1)
+contact_df = pd.read_excel(CONTACT_FILE, header = 1)
+asset_df = pd.read_excel(ASSET_FILE, header = 1)
 
 #merge (left join)
 merge_df = asset_df.merge(
@@ -105,4 +105,5 @@ for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=ws.max
 wb.save(output_file)
 
 print("Fonts and border applied successfully")
+
 
