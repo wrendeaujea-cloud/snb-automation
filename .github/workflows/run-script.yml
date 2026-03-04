@@ -24,4 +24,4 @@ jobs:
 
       - name: Run script
         run: |
-          python script.py
+          python SNBReportsAutomation.py
